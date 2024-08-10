@@ -1,22 +1,28 @@
 import s from "./Contact.module.css";
 import { FaUser, FaPhone } from "react-icons/fa";
+import { useDispatch } from "react-redux";
+import { deleteContact } from "../../redux/contactsSlice";
 
-const Contact = ({ contact, onDelete }) => {
+const ContactItem = ({ contact: { id, name, number } }) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
   return (
     <div className={s.card}>
       <div className={s.wrapper}>
         <p>
-          <FaUser /> {contact.name}
+          <FaUser /> {name}
         </p>
         <p>
-          <FaPhone /> {contact.number}
+          <FaPhone /> {number}
         </p>
       </div>
-      <button className={s.btn} onClick={() => onDelete(contact.id)}>
+      <button className={s.btn} onClick={handleDelete}>
         Delete
       </button>
     </div>
   );
 };
 
-export default Contact;
+export default ContactItem;
